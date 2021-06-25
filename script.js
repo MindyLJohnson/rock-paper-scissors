@@ -20,8 +20,15 @@ function computerPlay() {
 
 function playRound(playerSelection, computerSelection) {
     let roundResult = "Dud! Noone wins!";
-    playerSelection = playerSelection.charAt(0).toUpperCase() 
-        + playerSelection.substr(1, playerSelection.length).toLowerCase();
+
+    if (playerSelection === null) {
+        roundResult = "Game Cancelled"
+        return roundResult;
+    }
+    else {
+        playerSelection = playerSelection.charAt(0).toUpperCase() 
+        + playerSelection.substr(1, playerSelection.length-1).toLowerCase();
+    }
 
     switch(true) {
         case (playerSelection === computerSelection):
@@ -51,8 +58,12 @@ function game() {
     for (let i = 0; i < 5; i++) {
         let gameResult = "Dud! Everyone loses!";
         let computerSelection = computerPlay();
-        let playerSelection = "Rock";
+        let playerSelection = prompt("Rock, Paper, or Scissors?");
         roundResult = playRound(playerSelection, computerSelection);
+
+        if (roundResult === "Game Cancelled") {
+            break;
+        }
 
         switch(true) {
             case (roundResult.startsWith("You Win!")):
@@ -60,7 +71,7 @@ function game() {
                 break;
             case (roundResult.startsWith("You Lose!")):
                 computerScore++;
-                break;
+                break;                
         }
 
         console.log(roundResult);
@@ -69,7 +80,10 @@ function game() {
         console.log('');
     }
 
-    if (playerScore > computerScore) {
+    if (roundResult === "Game Cancelled") {
+        return roundResult;
+    }
+    else if (playerScore > computerScore) {
         gameResult = "**CONGRATS!! YOU'RE THE WINNER!!**";
     }
     else if (playerScore < computerScore) {
