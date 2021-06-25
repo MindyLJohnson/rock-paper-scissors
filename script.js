@@ -44,6 +44,42 @@ function playRound(playerSelection, computerSelection) {
     return roundResult;
 }
 
-const computerSelection = computerPlay();
+function game() {
+    let playerScore = 0;
+    let computerScore = 0;
 
-console.log(playRound("roCK", computerSelection));
+    for (let i = 0; i < 5; i++) {
+        let gameResult = "Dud! Everyone loses!";
+        let computerSelection = computerPlay();
+        let playerSelection = "Rock";
+        roundResult = playRound(playerSelection, computerSelection);
+
+        switch(true) {
+            case (roundResult.startsWith("You Win!")):
+                playerScore++;
+                break;
+            case (roundResult.startsWith("You Lose!")):
+                computerScore++;
+                break;
+        }
+
+        console.log(roundResult);
+        console.log(`Player's Score: ${playerScore}`);
+        console.log(`Computer's Score: ${computerScore}`);
+        console.log('');
+    }
+
+    if (playerScore > computerScore) {
+        gameResult = "**CONGRATS!! YOU'RE THE WINNER!!**";
+    }
+    else if (playerScore < computerScore) {
+        gameResult = "^^Bummer! You're a LOSER!!^^";
+    }
+    else {
+        gameResult = "Nice try, but it's a tie!";
+    }
+
+    return gameResult;
+}
+
+console.log(game());
