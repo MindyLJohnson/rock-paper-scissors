@@ -18,8 +18,7 @@ function computerPlay() {
     return randomSelection;
 }
 
-function playRound(playerSelection) {
-    let computerSelection = computerPlay();
+function playRound(playerSelection, computerSelection) {
     let roundResult = "Dud! Noone wins!";
 
     if (playerSelection === null) {
@@ -52,13 +51,12 @@ function playRound(playerSelection) {
     return roundResult;
 }
 
-function game() {
+function game(playerSelection) {
     let playerScore = 0;
     let computerScore = 0;
 
     let gameResult = "Dud! Everyone loses!";
     let computerSelection = computerPlay();
-    let playerSelection = prompt("Rock, Paper, or Scissors?");
     roundResult = playRound(playerSelection, computerSelection);
     
     switch(true) {
@@ -95,6 +93,6 @@ const buttons = document.querySelectorAll('button');
 
 buttons.forEach(button => {
     button.addEventListener('click', () => {
-        console.log(button.id);
+        game(button.id);
     })
 });
