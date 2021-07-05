@@ -68,10 +68,19 @@ function game(playerSelection) {
             break;                
     }
 
-    console.log(roundResult);
-    console.log(`Player's Score: ${playerScore}`);
-    console.log(`Computer's Score: ${computerScore}`);
-    console.log('');
+    const gameResults = document.querySelector('#game-results');
+
+    const playerScores = document.createElement('h3');
+    playerScores.textContent = `Player's Score: ${playerScore}`;
+    gameResults.appendChild(playerScores);
+
+    const computerScores = document.createElement('h3');
+    computerScores.textContent = `Computer's Score: ${computerScore}`;
+    gameResults.appendChild(computerScores);
+
+    const roundResults = document.createElement('p');
+    roundResults.textContent = roundResult;
+    gameResults.appendChild(roundResults);
 
     if (roundResult === "Game Cancelled") {
         return roundResult;
