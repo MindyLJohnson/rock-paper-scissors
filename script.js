@@ -18,7 +18,8 @@ function computerPlay() {
     return randomSelection;
 }
 
-function playRound(playerSelection, computerSelection) {
+function playRound(playerSelection) {
+    let computerSelection = computerPlay();
     let roundResult = "Dud! Noone wins!";
 
     if (playerSelection === null) {
@@ -89,3 +90,11 @@ function game() {
 
     return gameResult;
 }
+
+const buttons = document.querySelectorAll('button');
+
+buttons.forEach(button => {
+    button.addEventListener('click', () => {
+        console.log(button.id);
+    })
+});
