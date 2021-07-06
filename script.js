@@ -1,3 +1,6 @@
+let playerScore = 0;
+let computerScore = 0;
+
 function computerPlay() {
     let randomSelectionIndex = Math.floor(Math.random()*3);
 
@@ -19,16 +22,10 @@ function computerPlay() {
 }
 
 function playRound(playerSelection, computerSelection) {
-    let roundResult = "Dud! Noone wins!";
+    let roundResult = '';
 
-    if (playerSelection === null) {
-        roundResult = "Game Cancelled"
-        return roundResult;
-    }
-    else {
-        playerSelection = playerSelection.charAt(0).toUpperCase() 
-        + playerSelection.substr(1, playerSelection.length-1).toLowerCase();
-    }
+    playerSelection = playerSelection.charAt(0).toUpperCase() 
+         + playerSelection.substr(1, playerSelection.length-1).toLowerCase();
 
     switch(true) {
         case (playerSelection === computerSelection):
@@ -52,50 +49,40 @@ function playRound(playerSelection, computerSelection) {
 }
 
 function game(playerSelection) {
-    let playerScore = 0;
-    let computerScore = 0;
+    let gameResult = '';
 
-    let gameResult = "Dud! Everyone loses!";
-    let computerSelection = computerPlay();
-    roundResult = playRound(playerSelection, computerSelection);
-    
-    switch(true) {
-        case (roundResult.startsWith("You Win!")):
-            playerScore++;
-            break;
-        case (roundResult.startsWith("You Lose!")):
-            computerScore++;
-            break;                
+    if (playerScore < 5 && computerScore < 5) {
+        let computerSelection = computerPlay();
+        roundResult = playRound(playerSelection, computerSelection);
+        
+        switch(true) {
+            case (roundResult.startsWith("You Win!")):
+                playerScore++;
+                break;
+            case (roundResult.startsWith("You Lose!")):
+                computerScore++;
+                break;                
+        }
     }
 
-    const gameResults = document.querySelector('#game-results');
-
-    const playerScores = document.createElement('h3');
-    playerScores.textContent = `Player's Score: ${playerScore}`;
-    gameResults.appendChild(playerScores);
-
-    const computerScores = document.createElement('h3');
-    computerScores.textContent = `Computer's Score: ${computerScore}`;
-    gameResults.appendChild(computerScores);
-
-    const roundResults = document.createElement('p');
-    roundResults.textContent = roundResult;
-    gameResults.appendChild(roundResults);
-
-    if (roundResult === "Game Cancelled") {
-        return roundResult;
-    }
-    else if (playerScore > computerScore) {
+    if (playerScore >= 5) {
         gameResult = "**CONGRATS!! YOU'RE THE WINNER!!**";
     }
-    else if (playerScore < computerScore) {
+    else if (computerScore >= 5) {
         gameResult = "^^Bummer! You're a LOSER!!^^";
     }
-    else {
-        gameResult = "Nice try, but it's a tie!";
-    }
 
-    return gameResult;
+    const playerScores = document.querySelector('#player-score');
+    playerScores.textContent = `Player's Score: ${playerScore}`;
+
+    const computerScores = document.querySelector('#computer-score');
+    computerScores.textContent = `Computer's Score: ${computerScore}`;
+
+    const roundResults = document.querySelector('#round-results');
+    roundResults.textContent = roundResult;
+
+    const gameResults = document.querySelector('#game-results');
+    gameResults.textContent = gameResult;
 }
 
 const buttons = document.querySelectorAll('button');
